@@ -15,7 +15,7 @@ namespace CardCollection.Controllers
 
         public CardController()
         {
-            _context.Database.EnsureDeleted();
+            //_context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
         }
 
