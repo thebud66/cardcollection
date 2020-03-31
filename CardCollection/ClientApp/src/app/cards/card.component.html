@@ -1,0 +1,155 @@
+<!-- Add Set Modal -->
+<ng-template #addSetContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Add a New Set</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="inputNewSetName">Set Name</label>
+                <div class="input-group">
+                    <input id="inputNewSetName" class="form-control" name="inputNewSetName" [(ngModel)]="newSet.setName" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="saveNewSet()">Save</button>
+    </div>
+</ng-template>
+
+<!-- Add Sub Set Modal -->
+<ng-template #addSubSetContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Add a New SubSet</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="inputNewSubSetName">SubSet Name</label>
+                <div class="input-group">
+                    <input id="inputNewSubSetName" class="form-control" name="inputNewSubSetName" [(ngModel)]="newSubSet.subSetName" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="saveNewSubSet()">Save</button>
+    </div>
+</ng-template>
+
+<!--
+<p *ngIf="!cards"><em>Loading the card collection...</em></p>
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+        <a ngbNavLink>Add Cards</a>
+        <ng-template ngbNavContent>
+            <form>
+                <div class="row">
+                    <div class="col">
+                        <label for="inputTextName">Name</label>
+                        <input type="text" class="form-control" id="inputTextName" [(ngModel)]="newCard.name" name="inputTextName" ([formControl])="filter"/>
+                        <br />
+                        <div class="alert alert-danger" role="alert" hidden="{{ nameValidationHidden }}">
+                            Name is required!
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="inputTextNumber">Number</label>
+                        <input type="text" class="form-control" id="inputTextNumber" [(ngModel)]="newCard.number" name="inputTextNumber" />
+                        <br />
+                        <div class="alert alert-danger" role="alert" hidden="{{ numberValidationHidden }}">
+                            Number is required!
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="inputDropDownSet">Set</label>
+                        <div class="input-group">
+                            <select class="form-control" id="inputDropDownSet" name="inputDropDownSet" (change)="onSetChange($event.target.value, $event.target.selectedOptions[0].text)">
+                                <option></option>
+                                <option *ngFor="let set of sets" value="{{ set.setId }}">{{ set.setName }}</option>
+                            </select>
+                            <span>&nbsp;</span>
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" id="btnAddSet" type="button" (click)="openAddSetModal(addSetContent)">+</button>
+                            </span>
+                        </div>
+                        <br />
+                        <div class="alert alert-danger" role="alert" hidden="{{ setValidationHidden }}">
+                            Set is required!
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="inputDropDownSubSet">Sub-Set</label>
+                        <div class="input-group">
+                            <select class="form-control" id="inputDropDownSubSet" name="inputDropDownSubSet" (change)="onSubSetChange($event.target.value)">
+                                <option></option>
+                                <option *ngFor="let subSet of subSets" value="{{ subSet.subSetName }}">{{ subSet.subSetName }}</option>
+                            </select>
+                            <span>&nbsp;</span>
+                            <span>
+                                <button class="btn btn-primary" id="btnAddSubSet" type="button" (click)="openAddSubSetModal(addSubSetContent)">+</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="inputNumberYear">Year</label>
+                        <input type="number" class="form-control" id="inputNumberYear" [(ngModel)]="newCard.year" name="inputNumberYear" />
+                        <br />
+                        <div class="alert alert-danger" role="alert" hidden="{{ yearValidationHidden }}">
+                            Year is required!
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px; margin-bottom:10px">
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-secondary" (click)="clear()">Clear</button>
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-outline-primary" (click)="addCard()">Save</button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<table class='table table-sm table-hover' *ngIf="cards">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Set</th>
+            <th>Sub Set</th>
+            <th>Year</th>
+            <th>Qty</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let card of filteredCards$ | async">
+            <td>{{ card.cardId }}</td>
+            <td>{{ card.name }}</td>
+            <td>{{ card.number }}</td>
+            <td>{{ card.set }}</td>
+            <td>{{ card.subSet }}</td>
+            <td>{{ card.year }}</td>
+            <td>{{ card.quantity }}</td>
+            <td align="right">
+                <span class="badge badge-pill badge-primary" (click)="incrementCard(card)" style="cursor: pointer">+</span>
+                <span>&nbsp;</span>
+                <span class="badge badge-pill badge-danger" (click)="decrementCard(card)" style="cursor: pointer">-</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+-->
