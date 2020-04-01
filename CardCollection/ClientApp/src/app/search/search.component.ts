@@ -117,6 +117,7 @@ export class SearchComponent implements OnInit {
     this.selectedSetId = null;
     this.getSets();
     this.getSubSets(0);
+    document.getElementById('inputTextName').focus();
   }
 
   onSetChange(setId: string, setName: string): void {
@@ -273,8 +274,11 @@ export class SearchComponent implements OnInit {
             //this.getSets();
             //this.getSubSets(0);
             //this.newCard = this.initializeCard();
+            this.newCard.name = null;
+            this.newCard.number = null;
             this.cards = data;
             this.filterCard();
+            document.getElementById('inputTextName').focus();
           }
       );
 

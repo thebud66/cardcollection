@@ -22,7 +22,7 @@ namespace CardCollection.Controllers
         [HttpGet]
         public List<Card> GetCards()
         {
-            return _context.Cards.ToList();
+            return _context.Cards.OrderBy(c => c.Year).ThenBy(c => c.Set).ThenBy(c => c.Number).ToList();
         }
 
         [HttpGet]
@@ -49,7 +49,7 @@ namespace CardCollection.Controllers
 
             _context.Cards.Update(card);
             _context.SaveChanges();
-            return await _context.Cards.ToListAsync();
+            return await _context.Cards.OrderBy(c => c.Year).ThenBy(c => c.Set).ThenBy(c => c.Number).ToListAsync();
         }
 
         [HttpPut]
@@ -58,13 +58,13 @@ namespace CardCollection.Controllers
         {
             Card card = await _context.Cards.FindAsync(cardId);
             if (card.Quantity == 0)
-                return await _context.Cards.ToListAsync();
+                return await _context.Cards.OrderBy(c => c.Year).ThenBy(c => c.Set).ThenBy(c => c.Number).ToListAsync();
             else
                 card.Quantity--;
 
             _context.Cards.Update(card);
             _context.SaveChanges();
-            return await _context.Cards.ToListAsync();
+            return await _context.Cards.OrderBy(c => c.Year).ThenBy(c => c.Set).ThenBy(c => c.Number).ToListAsync();
         }
 
         [HttpPost]
@@ -91,7 +91,7 @@ namespace CardCollection.Controllers
             }
 
             _context.SaveChanges();
-            return await _context.Cards.ToListAsync();
+            return await _context.Cards.OrderBy(c => c.Year).ThenBy(c => c.Set).ThenBy(c => c.Number).ToListAsync();
         }
 
         [HttpPost]
