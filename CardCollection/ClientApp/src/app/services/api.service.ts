@@ -40,5 +40,9 @@ export class ApiService {
   addCard(card: Card): Observable<Card[]> {
     return this.httpClient.post<Card[]>(this.baseUrl + 'card/AddCard', card, {});
   }
+
+  updateCard(card: Card): Observable<Card[]> {
+    return this.httpClient.post<Card[]>(this.baseUrl + 'card/UpdateCard', card, {});
+  }
 }
 

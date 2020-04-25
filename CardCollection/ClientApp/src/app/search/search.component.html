@@ -1,5 +1,6 @@
 <!--<input type="text" name="inputFilter" id="inputFilter" placeholder="Filter Cards..." class="form-control" [(ngModel)]="filter" (keyup)="filterName($event)" />-->
 <!-- Add Set Modal -->
+
 <ng-template #addSetContent let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Add a New Set</h4>
@@ -45,6 +46,35 @@
     </div>
 </ng-template>
 
+<!-- Edit Card Modal -->
+<ng-template #editCard let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="editCardLabel">Edit Card</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="inputNewSubSetName">Name</label>
+                <div class="input-group">
+                    <input id="inputModifyCardName" class="form-control" name="inputModifyCardName" [(ngModel)]="modifiedCard.name" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputNewSubSetNumber">Number</label>
+                <div class="input-group">
+                    <input id="inputModifyCardNumber" class="form-control" name="inputModifyCardNumber" [(ngModel)]="modifiedCard.number" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveCard()">Save changes</button>
+    </div>
+</ng-template>
+
 <form>
     <div class="row">
         <div class="col">
@@ -57,7 +87,7 @@
         </div>
         <div class="col">
             <label for="inputTextNumber">Number</label>
-            <input type="text" class="form-control" id="inputTextNumber" [(ngModel)]="newCard.number" name="inputTextNumber" (keyup)="filterCard()"/>
+            <input type="text" class="form-control" id="inputTextNumber" [(ngModel)]="newCard.number" name="inputTextNumber" (keyup)="filterCard()" (keydown.enter)="addCard()" />
             <br />
             <div class="alert alert-danger" role="alert" hidden="{{ numberValidationHidden }}">
                 Number is required!
@@ -95,7 +125,7 @@
         </div>
         <div class="col">
             <label for="inputNumberYear">Year</label>
-            <input type="number" class="form-control" id="inputNumberYear" [(ngModel)]="newCard.year" name="inputNumberYear" (keyup)="filterCard()" (input)="filterCard()"/>
+            <input type="number" class="form-control" id="inputNumberYear" [(ngModel)]="newCard.year" name="inputNumberYear" (keyup)="filterCard()" (input)="filterCard()" />
             <br />
             <div class="alert alert-danger" role="alert" hidden="{{ yearValidationHidden }}">
                 Year is required!
@@ -105,6 +135,9 @@
     <div class="row" style="margin-top:10px; margin-bottom:10px">
         <div class="col">
             <button type="button" class="btn btn-outline-secondary" (click)="clear()">Clear</button>
+        </div>
+        <div class="col">
+            <p># Unique cards in set: {{ (filteredCards | async)?.length }}</p>
         </div>
         <div class="col text-right">
             <button type="button" class="btn btn-outline-primary" (click)="addCard()">Save</button>
@@ -116,7 +149,7 @@
 <table class='table table-sm table-hover' *ngIf="cards">
     <thead>
         <tr>
-            <th>Id</th>
+            <th></th>
             <th>Name</th>
             <th>Number</th>
             <th>Set</th>
@@ -128,7 +161,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let card of filteredCards | async">
-            <td>{{ card.cardId }}</td>
+            <td><i style="cursor: pointer" class="fa fa-edit" (click)="openEditCardModal(editCard, card)"></i></td>
             <td>{{ card.name }}</td>
             <td>{{ card.number }}</td>
             <td>{{ card.set }}</td>
@@ -143,3 +176,23 @@
         </tr>
     </tbody>
 </table>
+<br />
+<!--
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="{{ page.class }}" *ngFor="let page of pages">
+            <a class="page-link" (click)="changePage(page)">{{ page.pageNumber }}</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+    -->

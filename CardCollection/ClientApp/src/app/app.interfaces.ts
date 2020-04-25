@@ -18,3 +18,8 @@ export interface SubSet {
   setId: number;
   subSetName: string;
 }
+
+export interface PageConfig {
+  class: string,
+  pageNumber: number
+}
